@@ -33,7 +33,6 @@ function add-ssh-key {
         echo "$line" >> ${HOME}/.ssh/id
     done <<< "$SSH_KEY"
  
-    echo "$(cat ~/.ssh/config)"
     chmod 600 "${HOME}/.ssh/config"
     chmod 600 "${HOME}/.ssh/id"
 }

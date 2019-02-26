@@ -19,7 +19,7 @@
     "zip_password": "",
     "keep_local_backup": "",
     "rsync_enabled": false,
-	  "rsync_host": "",
+    "rsync_host": "",
     "rsync_rootfolder": "hassio-sync",
     "rsync_user": "",
     "rsync_password": ""
@@ -34,7 +34,7 @@
     "zip_password": "str",
     "keep_local_backup": "match(^(all|[+]?\\d*)$)",
     "rsync_enabled": "bool",
-	  "rsync_host": "str",
+    "rsync_host": "str",
     "rsync_rootfolder": "str",
     "rsync_user": "str",
     "rsync_password": "str"

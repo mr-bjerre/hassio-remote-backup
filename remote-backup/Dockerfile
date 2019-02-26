@@ -5,7 +5,7 @@ FROM $BUILD_FROM
 ENV LANG C.UTF-8
 
 # Setup base
-RUN apk add --no-cache jq openssh-client zip
+RUN apk add --no-cache jq openssh-client zip sshpass rsync
 
 # Hass.io CLI
 ARG BUILD_ARCH

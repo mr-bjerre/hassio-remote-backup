@@ -10,21 +10,33 @@
   "hassio_role": "backup",
   "map": ["backup:rw"],
   "options": {
+    "ssh_enabled": true,
     "ssh_host": "",
     "ssh_port": 22,
     "ssh_user": "",
     "ssh_key": [],
     "remote_directory": "",
     "zip_password": "",
-    "keep_local_backup": ""
+    "keep_local_backup": "",
+    "rsync_enabled": false,
+	  "rsync_host": "",
+    "rsync_rootfolder": "hassio-sync",
+    "rsync_user": "",
+    "rsync_password": ""
   },
   "schema": {
+    "ssh_enabled": "bool",
     "ssh_host": "str",
     "ssh_port": "int",
     "ssh_user": "str",
     "ssh_key": ["str"],
     "remote_directory": "str",
     "zip_password": "str",
-    "keep_local_backup": "match(^(all|[+]?\\d*)$)"
+    "keep_local_backup": "match(^(all|[+]?\\d*)$)",
+    "rsync_enabled": "bool",
+	  "rsync_server": "str",
+    "rsync_rootfolder": "str",
+    "rsync_user": "str",
+    "rsync_password": "str"
   }
 }

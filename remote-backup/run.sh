@@ -4,6 +4,7 @@ set -e
 CONFIG_PATH=/data/options.json
 
 # parse inputs from options
+SSH_ENABLED=$(jq --raw-output ".ssh_enabled" $CONFIG_PATH)
 SSH_HOST=$(jq --raw-output ".ssh_host" $CONFIG_PATH)
 SSH_PORT=$(jq --raw-output ".ssh_port" $CONFIG_PATH)
 SSH_USER=$(jq --raw-output ".ssh_user" $CONFIG_PATH)
@@ -12,6 +13,7 @@ REMOTE_DIRECTORY=$(jq --raw-output ".remote_directory" $CONFIG_PATH)
 ZIP_PASSWORD=$(jq --raw-output '.zip_password' $CONFIG_PATH)
 KEEP_LOCAL_BACKUP=$(jq --raw-output '.keep_local_backup' $CONFIG_PATH)
 
+RSYNC_ENABLED=$(jq --raw-output ".rsync_enabled" $CONFIG_PATH)
 RSYNC_HOST=$(jq --raw-output ".rsync_host" $CONFIG_PATH)
 RSYNC_ROOTFOLDER=$(jq --raw-output ".rsync_rootfolder" $CONFIG_PATH)
 RSYNC_USER=$(jq --raw-output ".rsync_user" $CONFIG_PATH)
@@ -21,28 +23,31 @@ RSYNC_PASSWORD=$(jq --raw-output ".rsync_password" $CONFIG_PATH)
 SSH_ID="${HOME}/.ssh/id"
 
 function add-ssh-key {
-    echo "Adding SSH key"
-    mkdir -p ~/.ssh
-    (
-        echo "Host remote"
-        echo "    IdentityFile ${HOME}/.ssh/id"
-        echo "    HostName ${SSH_HOST}"
-        echo "    User ${SSH_USER}"
-        echo "    Port ${SSH_PORT}"
-        echo "    StrictHostKeyChecking no"
-    ) > "${HOME}/.ssh/config"
 
-    while read -r line; do
-        echo "$line" >> ${HOME}/.ssh/id
-    done <<< "$SSH_KEY"
+    if [ "$SSH_ENABLED" = true ] ; then
+        echo "Adding SSH key"
+        mkdir -p ~/.ssh
+        (
+            echo "Host remote"
+            echo "    IdentityFile ${HOME}/.ssh/id"
+            echo "    HostName ${SSH_HOST}"
+            echo "    User ${SSH_USER}"
+            echo "    Port ${SSH_PORT}"
+            echo "    StrictHostKeyChecking no"
+        ) > "${HOME}/.ssh/config"
 
-    chmod 600 "${HOME}/.ssh/config"
-    chmod 600 "${HOME}/.ssh/id"
+        while read -r line; do
+            echo "$line" >> ${HOME}/.ssh/id
+        done <<< "$SSH_KEY"
+
+        chmod 600 "${HOME}/.ssh/config"
+        chmod 600 "${HOME}/.ssh/id"
+    fi    
 }
 
 function copy-backup-to-remote {
 
-    if hass.config.false 'ssh_enabled'; then
+    if [ "$SSH_ENABLED" = true ] ; then
         cd /backup/
         if [[ -z $ZIP_PASSWORD  ]]; then
             echo "Copying ${slug}.tar to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
@@ -88,14 +93,24 @@ function create-local-backup {
 
 function rsync_folders {
 
-    if hass.config.false 'rsync_enabled'; then
+    if [ "$RSYNC_ENABLED" = true ] ; then
         rsyncurl="$RSYNC_USER@$RSYNC_HOST::$RSYNC_ROOTFOLDER"
         echo "[Info] trying to rsync hassio folders to $rsyncurl"
-         sshpass -p $RSYNC_PASSWORD rsync -av /config/ $rsyncurl/config/ 
-         sshpass -p $RSYNC_PASSWORD rsync -av /addons/ $rsyncurl/addons/ 
-         sshpass -p $RSYNC_PASSWORD rsync -av /backup/ $rsyncurl/backup/ 
-         sshpass -p $RSYNC_PASSWORD rsync -av /share/ $rsyncurl/share/ 
-         sshpass -p $RSYNC_PASSWORD rsync -av /ssl/ $rsyncurl/ssl/ 
+        echo ""
+        echo "[Info] /config"
+         sshpass -p $RSYNC_PASSWORD rsync -av /config/ $rsyncurl/config/ --delete
+        echo ""
+        echo "[Info] /addons"
+         sshpass -p $RSYNC_PASSWORD rsync -av /addons/ $rsyncurl/addons/ --delete
+        echo ""
+        echo "[Info] /backup"
+         sshpass -p $RSYNC_PASSWORD rsync -av /backup/ $rsyncurl/backup/ --delete
+        echo ""
+        echo "[Info] /share"
+         sshpass -p $RSYNC_PASSWORD rsync -av /share/ $rsyncurl/share/ --delete
+        echo ""
+        echo "[Info] /ssl"
+         sshpass -p $RSYNC_PASSWORD rsync -av /ssl/ $rsyncurl/ssl/ --delete
         echo "[Info] Finished rsync"
     fi
 }
@@ -104,6 +119,7 @@ function rsync_folders {
 add-ssh-key
 create-local-backup
 copy-backup-to-remote
+rsync_folders
 delete-local-backup
 
 echo "Backup process done!"

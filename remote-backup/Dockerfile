@@ -11,7 +11,7 @@ RUN apk add --no-cache jq openssh-client zip sshpass rsync
 ARG BUILD_ARCH
 ARG CLI_VERSION
 RUN apk add --no-cache curl \
-    && curl -Lso /usr/bin/hassio https://github.com/home-assistant/hassio-cli/releases/download/1.2.1/hassio_${BUILD_ARCH} \
+    && curl -Lso /usr/bin/hassio https://github.com/home-assistant/hassio-cli/releases/download/2.2.0/hassio_${BUILD_ARCH} \
     && chmod a+x /usr/bin/hassio
 
 # Copy data
@@ -37,7 +37,7 @@ LABEL \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="Remote Backup" \
     org.label-schema.schema-version="1.0" \
-    org.label-schema.usage="https://github.com/overkill32/hassio-remote-backup/tree/master/README.md" \
+    org.label-schema.usage="https://github.com/mr-bjerre/hassio-remote-backup/tree/master/README.md" \
     org.label-schema.vcs-ref=${BUILD_REF} \
-    org.label-schema.vcs-url="https://github.com/overkill32/hassio-remote-backup/" \
+    org.label-schema.vcs-url="https://github.com/mr-bjerre/hassio-remote-backup/" \
     org.label-schema.vendor="Hass.io add-ons by Nicolai"

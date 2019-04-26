@@ -11,7 +11,7 @@ RUN apk add --no-cache jq openssh-client zip sshpass rsync
 ARG BUILD_ARCH
 ARG CLI_VERSION
 RUN apk add --no-cache curl \
-    && curl -Lso /usr/bin/hassio https://github.com/home-assistant/hassio-cli/releases/download/1.2.1/hassio_${BUILD_ARCH} \
+    && curl -Lso /usr/bin/hassio https://github.com/home-assistant/hassio-cli/releases/download/2.2.0/hassio_${BUILD_ARCH} \
     && chmod a+x /usr/bin/hassio
 
 # Copy data

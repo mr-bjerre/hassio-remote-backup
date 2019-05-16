@@ -4,6 +4,7 @@ set -e
 CONFIG_PATH=/data/options.json
 
 # parse inputs from options
+SSH_CIPHERS=$(jq --raw-output ".ssh_ciphers" $CONFIG_PATH)
 SSH_HOST=$(jq --raw-output ".ssh_host" $CONFIG_PATH)
 SSH_PORT=$(jq --raw-output ".ssh_port" $CONFIG_PATH)
 SSH_USER=$(jq --raw-output ".ssh_user" $CONFIG_PATH)
@@ -25,6 +26,9 @@ function add-ssh-key {
         echo "    User ${SSH_USER}"
         echo "    Port ${SSH_PORT}"
         echo "    StrictHostKeyChecking no"
+        if [ -n "$SSH_CIPHERS" ]; then
+            echo "    Ciphers ${SSH_CIPHER}"
+        fi
     ) > "${HOME}/.ssh/config"
 
     while read -r line; do

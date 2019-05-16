@@ -11,6 +11,7 @@
   "map": ["backup:rw"],
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "options": {
+    "ssh_ciphers": "",
     "ssh_host": "",
     "ssh_port": 22,
     "ssh_user": "",
@@ -20,6 +21,7 @@
     "keep_local_backup": ""
   },
   "schema": {
+    "ssh_ciphers": "str",
     "ssh_host": "str",
     "ssh_port": "int",
     "ssh_user": "str",

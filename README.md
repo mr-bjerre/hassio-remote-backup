@@ -1,4 +1,3 @@
-
 # Remote Backup
 
 [![GitHub Release][releases-shield]][releases]
@@ -7,7 +6,7 @@
 
 > Automatically create Hass.io snapshots to remote server location using `SCP`.
 
-<hr>
+----
 
 ## Table of Contents
 
@@ -21,6 +20,7 @@
 ## <a name='about'></a>About
 
 When the add-on is started the following happens:
+
 1. Snapshot are being created locally with a timestamp name, e.g.
 *Automatic backup 2018-03-04 04:00*.
 1. The snapshot are copied to the specified remote location using `SCP`.

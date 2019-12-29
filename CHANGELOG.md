@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][keep-a-changelog] this project adheres to [Semantic Versioning][semantic-versioning].
 
+## [v0.3.2++] (????-??-??)
+
+[Full Changelog](https://github.com/overkill32/hassio-remote-backup/compare/v0.3.2...master)
+
+### Fixed
+
+- Updated `hassio-cli` to version 3.1.1
+- Modified `run.sh` hassio calls to work with version 3.1.1
+
 ## [v0.3.2] (2018-10-12)
 
 [Full Changelog](https://github.com/overkill32/hassio-remote-backup/compare/v0.3.1...v0.3.2)

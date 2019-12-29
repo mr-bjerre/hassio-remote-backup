@@ -57,16 +57,16 @@ function delete-local-backup {
         :
     elif [[ -z ${KEEP_LOCAL_BACKUP} ]]; then
         echo "Deleting local backup: ${slug}"
-        hassio snapshots remove -name "${slug}"
+        hassio snapshots remove "${slug}"
     else
 
-        last_date_to_keep=$(hassio snapshots list | jq .data.snapshots[].date | sort -r | \
+        last_date_to_keep=$(hassio snapshots list --raw-json | jq .data.snapshots[].date | sort -r | \
             head -n "${KEEP_LOCAL_BACKUP}" | tail -n 1 | xargs date -D "%Y-%m-%dT%T" +%s --date )
 
-        hassio snapshots list | jq -c .data.snapshots[] | while read backup; do
+        hassio snapshots list --raw-json | jq -c .data.snapshots[] | while read backup; do
             if [[ $(echo ${backup} | jq .date | xargs date -D "%Y-%m-%dT%T" +%s --date ) -lt ${last_date_to_keep} ]]; then
                 echo "Deleting local backup: $(echo ${backup} | jq -r .slug)"
-                hassio snapshots remove -name "$(echo ${backup} | jq -r .slug)"
+                hassio snapshots remove "$(echo ${backup} | jq -r .slug)"
             fi
         done
 
@@ -76,7 +76,7 @@ function delete-local-backup {
 function create-local-backup {
     name="Automated backup $(date +'%Y-%m-%d %H:%M')"
     echo "Creating local backup: \"${name}\""
-    slug=$(hassio snapshots new --options name="${name}" | jq --raw-output '.data.slug')
+    slug=$(hassio snapshots new --raw-json --name="${name}" --no-progress | jq --raw-output '.data.slug')
     echo "Backup created: ${slug}"
 }
 

@@ -59,15 +59,26 @@ function delete-local-backup {
         echo "Deleting local backup: ${slug}"
         hassio snapshots remove "${slug}"
     else
-
-        last_date_to_keep=$(hassio snapshots list --raw-json | jq .data.snapshots[].date | sort -r | \
-            head -n "${KEEP_LOCAL_BACKUP}" | tail -n 1 | xargs date -D "%Y-%m-%dT%T" +%s --date )
-
-        hassio snapshots list --raw-json | jq -c .data.snapshots[] | while read backup; do
-            if [[ $(echo ${backup} | jq .date | xargs date -D "%Y-%m-%dT%T" +%s --date ) -lt ${last_date_to_keep} ]]; then
-                echo "Deleting local backup: $(echo ${backup} | jq -r .slug)"
-                hassio snapshots remove "$(echo ${backup} | jq -r .slug)"
-            fi
+        ## jq filter used to select required snapshots to delete.
+        ## Expanded form given here with explanation...
+        #   # Remove outer containers to leave an array of snapshot objects
+        #   .data.snapshots 
+        #   # select out snapshots that are not protected
+        #   | map(select(.protected==false)) 
+        #   # sort the objects by date - oldest first
+        #   | sort_by(.date) 
+        #   # reverse the sort - now oldest last
+        #   | reverse 
+        #   # select all items after the fist ${KEEP_LOCAL_BACKUP} items
+        #   | .[${KEEP_LOCAL_BACKUP}:] 
+        #   # output just the slug entry for each snapshot
+        #   | .[].slug
+        for slug in $( \
+            hassio snapshots list --raw-json | \
+            jq -r ".data.snapshots | map(select(.protected==false)) | sort_by(.date) | reverse | .[${KEEP_LOCAL_BACKUP}:] | .[].slug" )
+        do
+            echo "Deleting local backup: ${slug}"
+            hassio snapshots remove ${slug}
         done
 
     fi

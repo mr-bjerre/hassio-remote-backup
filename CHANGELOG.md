@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog][keep-a-changelog] this project adheres
 
 - Updated `hassio-cli` to version 3.1.1
 - Modified `run.sh` hassio calls to work with version 3.1.1
+- Converted snapshot removal selection logic to a jq filter
 
 ## [v0.3.2] (2018-10-12)
 

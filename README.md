@@ -49,6 +49,10 @@ See my [repository of addons][hassio-addons] for more information.
 |`zip_password`|No|If set then the backup will be contained in a password protected zip|
 |`keep_local_backup`|No|Control how many local backups you want to preserve. Default (`""`) is to keep no local backups created from this addon. If `all` then all loocal backups will be preserved. A positive integer will determine how many of the latest backups will be preserved. Note this will delete other local backups created outside this addon.
 
+Remember that no matter what `keep_local_backup` is set to, you will add one
+new snapshot backup file to the remote location each time this is run.  You
+may wish to have some form of expiry of these snapshots.
+
 ## <a name='example'></a>Example: daily backups at 4 AM
 
 Personally I've added the following automation to make a daily backup. It is password-protected and the last two weeks of snapshots are kept locally as well.

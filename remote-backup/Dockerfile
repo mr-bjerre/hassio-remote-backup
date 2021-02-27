@@ -11,7 +11,7 @@ RUN apk add --no-cache jq openssh-client zip
 ARG BUILD_ARCH
 ARG CLI_VERSION
 RUN apk add --no-cache curl \
-    && curl -Lso /usr/bin/ha https://github.com/home-assistant/cli/releases/download/4.3.0/ha_${BUILD_ARCH} \
+    && curl -Lso /usr/bin/ha https://github.com/home-assistant/cli/releases/download/4.10.1/ha_${BUILD_ARCH} \
     && chmod a+x /usr/bin/ha
 
 # Copy data
@@ -32,12 +32,12 @@ LABEL \
     io.hass.arch="${BUILD_ARCH}" \
     io.hass.type="addon" \
     io.hass.version=${BUILD_VERSION} \
-    maintainer="Nicolai Bjerre Pedersen <mr.bjerre@gmail.com> / TheStigh" \
+    maintainer="Nigel Metheringham <nigelm@cpan.org>" \
     org.label-schema.description="Automatically create Hass.io snapshots to remote server location using `SCP`." \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="Remote Backup" \
     org.label-schema.schema-version="1.0" \
-    org.label-schema.usage="https://github.com/thestigh/hassio-remote-backup/tree/master/README.md" \
+    org.label-schema.usage="https://github.com/nigelm/hassio-remote-backup/tree/master/README.md" \
     org.label-schema.vcs-ref=${BUILD_REF} \
-    org.label-schema.vcs-url="https://github.com/thestigh/hassio-remote-backup/" \
-    org.label-schema.vendor="Hass.io add-ons by Nicolai/TheStigh"
+    org.label-schema.vcs-url="https://github.com/nigelm/hassio-remote-backup/" \
+    org.label-schema.vendor="Hass.io add-ons by Nigel Metheringham"

@@ -6,13 +6,21 @@ The format is based on [Keep a Changelog][keep-a-changelog] this project adheres
 
 ## [v0.3.2++] (????-??-??)
 
-[Full Changelog](https://github.com/overkill32/hassio-remote-backup/compare/v0.3.2...master)
+[Full Changelog](https://github.com/nigelm/hassio-remote-backup/compare/v0.3.2...master)
 
 ### Fixed
 
 - Updated `hassio-cli` to version 3.1.1
 - Modified `run.sh` hassio calls to work with version 3.1.1
 - Converted snapshot removal selection logic to a jq filter
+- Merged in changes from rccoleman - https://github.com/rccoleman/hassio-remote-backup
+    - Updated `hassio-cli` to 4.3.0
+    - Added README notes
+    - Reformatted run.sh for change of `hassio-cli` binary name
+- Updated `hassio-cli` to 4.10.1
+- Since the previous maintainers do not appear to be keeping up with this, and
+  have not got available docker builds, I have updated the references to point
+  to my repositories.
 
 ## [v0.3.2] (2018-10-12)
 

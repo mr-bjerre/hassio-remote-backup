@@ -1,7 +1,10 @@
 #!/bin/bash
+# hassio remote-backup main script
+# formatted with: shfmt -i 4 -l
 set -e
 
 CONFIG_PATH=/data/options.json
+HA=/usr/bin/ha
 
 # parse inputs from options
 SSH_HOST=$(jq --raw-output ".ssh_host" $CONFIG_PATH)
@@ -25,11 +28,11 @@ function add-ssh-key {
         echo "    User ${SSH_USER}"
         echo "    Port ${SSH_PORT}"
         echo "    StrictHostKeyChecking no"
-    ) > "${HOME}/.ssh/config"
+    ) >"${HOME}/.ssh/config"
 
     while read -r line; do
-        echo "$line" >> ${HOME}/.ssh/id
-    done <<< "$SSH_KEY"
+        echo "$line" >>${HOME}/.ssh/id
+    done <<<"$SSH_KEY"
 
     chmod 600 "${HOME}/.ssh/config"
     chmod 600 "${HOME}/.ssh/id"
@@ -38,59 +41,59 @@ function add-ssh-key {
 function copy-backup-to-remote {
 
     cd /backup/
-    if [[ -z $ZIP_PASSWORD  ]]; then
-      echo "Copying ${slug}.tar to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
-      scp -F "${HOME}/.ssh/config" "${slug}.tar" remote:"${REMOTE_DIRECTORY}"
+    if [[ -z $ZIP_PASSWORD ]]; then
+        echo "Copying ${slug}.tar to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
+        scp -F "${HOME}/.ssh/config" "${slug}.tar" remote:"${REMOTE_DIRECTORY}"
     else
-      echo "Copying password-protected ${slug}.zip to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
-      zip -P "$ZIP_PASSWORD" "${slug}.zip" "${slug}".tar
-      scp -F "${HOME}/.ssh/config" "${slug}.zip" remote:"${REMOTE_DIRECTORY}" && rm "${slug}.zip"
+        echo "Copying password-protected ${slug}.zip to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
+        zip -P "$ZIP_PASSWORD" "${slug}.zip" "${slug}".tar
+        scp -F "${HOME}/.ssh/config" "${slug}.zip" remote:"${REMOTE_DIRECTORY}" && rm "${slug}.zip"
     fi
 
 }
 
 function delete-local-backup {
 
-    hassio snapshots reload
+    ${HA} snapshots reload
 
     if [[ ${KEEP_LOCAL_BACKUP} == "all" ]]; then
         :
     elif [[ -z ${KEEP_LOCAL_BACKUP} ]]; then
         echo "Deleting local backup: ${slug}"
-        hassio snapshots remove "${slug}"
+        ${HA} snapshots remove ${slug}
     else
         ## jq filter used to select required snapshots to delete.
         ## Expanded form given here with explanation...
         #   # Remove outer containers to leave an array of snapshot objects
-        #   .data.snapshots 
+        #   .data.snapshots
         #   # select out snapshots that are not protected
-        #   | map(select(.protected==false)) 
+        #   | map(select(.protected==false))
         #   # sort the objects by date - oldest first
-        #   | sort_by(.date) 
+        #   | sort_by(.date)
         #   # reverse the sort - now oldest last
-        #   | reverse 
+        #   | reverse
         #   # select all items after the fist ${KEEP_LOCAL_BACKUP} items
-        #   | .[${KEEP_LOCAL_BACKUP}:] 
+        #   | .[${KEEP_LOCAL_BACKUP}:]
         #   # output just the slug entry for each snapshot
         #   | .[].slug
-        for slug in $( \
-            hassio snapshots list --raw-json | \
-            jq -r ".data.snapshots | map(select(.protected==false)) | sort_by(.date) | reverse | .[${KEEP_LOCAL_BACKUP}:] | .[].slug" )
-        do
+        for slug in $(
+            ${HA} snapshots list --raw-json |
+                jq -r ".data.snapshots | map(select(.protected==false)) | sort_by(.date) | reverse | .[${KEEP_LOCAL_BACKUP}:] | .[].slug"
+        ); do
             echo "Deleting local backup: ${slug}"
-            hassio snapshots remove ${slug}
+            ${HA} snapshots remove ${slug}
         done
 
     fi
+    echo Exiting
 }
 
 function create-local-backup {
     name="Automated backup $(date +'%Y-%m-%d %H:%M')"
     echo "Creating local backup: \"${name}\""
-    slug=$(hassio snapshots new --raw-json --name="${name}" --no-progress | jq --raw-output '.data.slug')
+    slug=$(${HA} snapshots new --raw-json --name="${name}" --no-progress | jq --raw-output '.data.slug')
     echo "Backup created: ${slug}"
 }
-
 
 add-ssh-key
 create-local-backup

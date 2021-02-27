@@ -19,6 +19,8 @@
 
 ## <a name='about'></a>About
 
+*Note: For anyone using this as a local addon, it appears that the latest base image now requires updating to the new "OPENSSH" private key format.  If you were previously using a private key that started "RSA PRIVATE KEY", you'll need to follow the instructions [here](https://serverfault.com/questions/854208/ssh-suddenly-returning-invalid-format/960647) to update your private key and add the new key in the addon config.  Using the older key format will result in "Load pubkey "xxx": Invalid format" as described at the link.*
+
 When the add-on is started the following happens:
 
 1. Snapshot are being created locally with a timestamp name, e.g.

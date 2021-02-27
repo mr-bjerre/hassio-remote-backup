@@ -16,6 +16,6 @@ jobs:
           --test \
           --all \
           --target remote-backup \
-          --docker-hub nigelm
+          --docker-hub nigelm/hassio-remote-backup
 
 # end

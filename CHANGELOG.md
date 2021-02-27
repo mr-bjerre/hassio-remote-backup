@@ -4,11 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][keep-a-changelog] this project adheres to [Semantic Versioning][semantic-versioning].
 
-## [v0.3.2++] (????-??-??)
+## [v0.4.3++] (????-??-??)
 
 [Full Changelog](https://github.com/nigelm/hassio-remote-backup/compare/v0.3.2...master)
 
 ### Fixed
+
+## [v0.4.3] (2021-02-27)
 
 - Updated `hassio-cli` to version 3.1.1
 - Modified `run.sh` hassio calls to work with version 3.1.1
@@ -21,6 +23,7 @@ The format is based on [Keep a Changelog][keep-a-changelog] this project adheres
 - Since the previous maintainers do not appear to be keeping up with this, and
   have not got available docker builds, I have updated the references to point
   to my repositories.
+- Fixed updating changelog on release :-)
 
 ## [v0.3.2] (2018-10-12)
 

@@ -23,6 +23,7 @@ jobs:
           --all \
           --target remote-backup \
           --image hassio-remote-backup-{arch} \
+          --version ${{ github.event.release.tag_name }} \
           --docker-hub nigelm
 
 # end

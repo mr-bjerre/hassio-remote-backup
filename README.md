@@ -1,7 +1,8 @@
 # Remote Backup
 
 [![GitHub Release][releases-shield]][releases]
-[![Build Status][travis-build-shield]][travis-build]
+[![Build Status](https://github.com/nigelm/hassio-remote-backup/actions/workflows/homeassistant-test.yml/badge.svg)
+[![Release Status](https://github.com/nigelm/hassio-remote-backup/actions/workflows/homeassistant-publish.yml/badge.svg)
 [![GitHub license][license-shield]](LICENSE.md)
 
 > Automatically create Hass.io snapshots to remote server location using `SCP`.
@@ -142,29 +143,29 @@ based on the following:
 
 
 [aarch64-arch-shield]: https://img.shields.io/badge/architecture-aarch64-blue.svg
-[aarch64-dockerhub]: https://hub.docker.com/r/fixated/remote-backup-aarch64
-[aarch64-layers-shield]: https://images.microbadger.com/badges/image/fixated/remote-backup-aarch64.svg
-[aarch64-microbadger]: https://microbadger.com/images/fixated/remote-backup-aarch64
-[aarch64-pulls-shield]: https://img.shields.io/docker/pulls/fixated/remote-backup-aarch64.svg
-[aarch64-version-shield]: https://images.microbadger.com/badges/version/fixated/remote-backup-aarch64.svg
+[aarch64-dockerhub]: https://hub.docker.com/r/nigelm/remote-backup-aarch64
+[aarch64-layers-shield]: https://images.microbadger.com/badges/image/nigelm/remote-backup-aarch64.svg
+[aarch64-microbadger]: https://microbadger.com/images/nigelm/remote-backup-aarch64
+[aarch64-pulls-shield]: https://img.shields.io/docker/pulls/nigelm/remote-backup-aarch64.svg
+[aarch64-version-shield]: https://images.microbadger.com/badges/version/nigelm/remote-backup-aarch64.svg
 [amd64-arch-shield]: https://img.shields.io/badge/architecture-amd64-blue.svg
-[amd64-dockerhub]: https://hub.docker.com/r/fixated/remote-backup-amd64
-[amd64-layers-shield]: https://images.microbadger.com/badges/image/fixated/remote-backup-amd64.svg
-[amd64-microbadger]: https://microbadger.com/images/fixated/remote-backup-amd64
-[amd64-pulls-shield]: https://img.shields.io/docker/pulls/fixated/remote-backup-amd64.svg
-[amd64-version-shield]: https://images.microbadger.com/badges/version/fixated/remote-backup-amd64.svg
+[amd64-dockerhub]: https://hub.docker.com/r/nigelm/remote-backup-amd64
+[amd64-layers-shield]: https://images.microbadger.com/badges/image/nigelm/remote-backup-amd64.svg
+[amd64-microbadger]: https://microbadger.com/images/nigelm/remote-backup-amd64
+[amd64-pulls-shield]: https://img.shields.io/docker/pulls/nigelm/remote-backup-amd64.svg
+[amd64-version-shield]: https://images.microbadger.com/badges/version/nigelm/remote-backup-amd64.svg
 [armhf-arch-shield]: https://img.shields.io/badge/architecture-armhf-blue.svg
-[armhf-dockerhub]: https://hub.docker.com/r/fixated/remote-backup-armhf
-[armhf-layers-shield]: https://images.microbadger.com/badges/image/fixated/remote-backup-armhf.svg
-[armhf-microbadger]: https://microbadger.com/images/fixated/remote-backup-armhf
-[armhf-pulls-shield]: https://img.shields.io/docker/pulls/fixated/remote-backup-armhf.svg
-[armhf-version-shield]: https://images.microbadger.com/badges/version/fixated/remote-backup-armhf.svg
+[armhf-dockerhub]: https://hub.docker.com/r/nigelm/remote-backup-armhf
+[armhf-layers-shield]: https://images.microbadger.com/badges/image/nigelm/remote-backup-armhf.svg
+[armhf-microbadger]: https://microbadger.com/images/nigelm/remote-backup-armhf
+[armhf-pulls-shield]: https://img.shields.io/docker/pulls/nigelm/remote-backup-armhf.svg
+[armhf-version-shield]: https://images.microbadger.com/badges/version/nigelm/remote-backup-armhf.svg
 [i386-arch-shield]: https://img.shields.io/badge/architecture-i386-blue.svg
-[i386-dockerhub]: https://hub.docker.com/r/fixated/remote-backup-i386
-[i386-layers-shield]: https://images.microbadger.com/badges/image/fixated/remote-backup-i386.svg
-[i386-microbadger]: https://microbadger.com/images/fixated/remote-backup-i386
-[i386-pulls-shield]: https://img.shields.io/docker/pulls/fixated/remote-backup-i386.svg
-[i386-version-shield]: https://images.microbadger.com/badges/version/fixated/remote-backup-i386.svg
+[i386-dockerhub]: https://hub.docker.com/r/nigelm/remote-backup-i386
+[i386-layers-shield]: https://images.microbadger.com/badges/image/nigelm/remote-backup-i386.svg
+[i386-microbadger]: https://microbadger.com/images/nigelm/remote-backup-i386
+[i386-pulls-shield]: https://img.shields.io/docker/pulls/nigelm/remote-backup-i386.svg
+[i386-version-shield]: https://images.microbadger.com/badges/version/nigelm/remote-backup-i386.svg
 
 [license-shield]: https://img.shields.io/github/license/nigelm/hassio-remote-backup.svg
 [releases]: https://github.com/nigelm/hassio-remote-backup/releases
